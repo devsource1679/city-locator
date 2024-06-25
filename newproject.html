@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>newproject</title>
+</head>
+<style>
+    *{
+        box-sizing: border-box;
+    }
+    html,body{
+        height: 100%;
+    }
+#table {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    border: 3px solid aqua;
+    top: 0;
+
+
+}
+#table > div:nth-child(2){
+    position: absolute;
+    height: 50%;
+    width: 100%;
+    border: 3px solid brown;
+    top: 0;
+    bottom: 20%;
+}
+</style>
+<body>
+    <div id="table">
+        <div></div>
+        <div></div>
+    </div>
+    <div></div>
+</body>
+</html>

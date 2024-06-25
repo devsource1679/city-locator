@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+        #firstangle{
+           border-bottom: 80px solid brown;
+           border-right: 50px solid transparent;
+           border-left: 50px solid transparent;
+    
+        }
+        /*#firstangle > div :nth-child(2){
+            position: absolute;
+            height: 50px;
+            border: 2px solid brown;
+        }*/
+        .cir{
+            position: relative;
+            margin-top: 10px;
+            height: 30px;
+            width: 30px;
+            background-color: rgb(10, 11, 11);
+            border-radius: 50px;
+        }
+        .tri{
+            bottom: 30px;
+            height: 50px;
+            width: 50px;
+            /*background-color: blueviolet;*/
+            border-top: 30px solid red ;
+            border-bottom: 30px solid purple ;
+            border-left: 30px solid pink ;
+            border-right: 30px solid brown ;
+        }
+       
+    </style>
+</head>
+<body>
+    <span id="firstangle">
+        <span></span>
+    </span>
+    <div class="cir">
+        <div></div>
+    </div>
+    <div class="tri">
+        <div></div>
+    </div>
+    <script>
+        //alert(window.variable); single line comments
+
+    </script>
+    <script defer>
+            const variable = function(){            
+            alert('stringer');
+            return 'string';
+        };
+        something(){
+         variable = "data";
+        }
+        function nothing(args){
+           args = "change";
+           alert(args);//wrapper functions is a function used to wrap another function
+           let data;
+           
+        } 
+        
+        //crate four function call add, divide, multiply, and sbtract ensure those function has arguement return the result
+        nothing(variable());
+        alert( variable());
+        something();
+        alert(variable());
+        
+       function name(){
+        console.log('1 + 2 + 3') * 2;
+       }
+
+       name();
+
+    
+    </script>
+    <script>
+        //alert(variable);
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

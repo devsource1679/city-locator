@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>myproject</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.js"></script>
+</head>
+<style>
+    *{  
+        box-sizing: border-box;
+    }
+
+    html, body {
+        height: 100%;
+    }
+    #project{
+        position: relative;
+        border: 3px solid rgb(151, 150, 148);
+        height: 100%;
+        width: 100%;
+        top: 0;
+    }
+    /*#project > div{
+        /*border: 3px solid purple;
+        background-color: rgb(225, 219, 219);
+        
+    } */
+    #project > div:first-child {
+        /*border: 3px solid rgb(226, 97, 97);*/
+        height: 70%;
+        width: 100%;
+        
+    }
+    #menu-button {
+        position: relative;
+        height: 50px;
+        width: 50px;
+        box-shadow: 1px 5px 10px rgb(10, 9, 9);
+        border-radius: 60%;
+        top: 5px;
+        left: 5px;
+        background-color: aliceblue;
+        z-index:100;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    #menu-button > :nth-child(1){
+        position: absolute;
+        font-size:20px;
+    }
+    
+    #menu {
+        display:none;
+        position:absolute;
+        z-index:100;
+        background-color: rgba(0,0,0,0.4);
+        width:100%;
+        top:0;
+        height:100%;
+    }
+    #bar{
+        height: 100%;
+        width: 50%;
+        position: absolute;
+        background-color: white;
+        z-index:150;
+        top:0;
+        left:0;
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+    }
+    #bar > :first-child{
+        height: 20%;
+        width: 100%;
+        background-color: white;
+        border-radius: 10px;
+        border-top-right-radius: 0;
+        border-top-left-radius: 0;
+
+    }
+    #bar > :nth-child(2){
+        height: 80%;
+        width: 100%;
+        position: relative;
+        background-color: white;
+        border-radius: 10px;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+
+    #bar2 {
+        position: absolute;         
+        background-color: hsl(172.87deg 89.72% 81.1%);
+        bottom: 20px;
+        border-radius: 5px;
+        height: fit-content;
+        min-width: 90%;        
+        left: 5px;
+        min-height: 70px;
+        font-size: 14px;
+    }
+
+    #bar2 > div {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        gap: 5px;
+        padding: 5px;
+        min-height: inherit;
+        min-width: inherit;
+        background-color: transparent;
+    }
+
+    #bar2 > div > span {
+        position: absolute;
+        right: 5px;
+        top:5px;
+    }
+
+    #bar2 > div > div:first-of-type {
+        font-weight: 900;
+        font-family: sans-serif;
+    }
+
+    /*
+        position: absolute;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5px;
+    background-color: hsl(200deg 89.72% 81.1%);
+    bottom: 20px;
+    border-radius: 20%;
+    height: fit-content;
+    min-width: 70%;
+    padding: 5px;
+    left: 5px;
+    min-height: 70px;
+    */
+    #profileimage{
+       position: relative;
+        height: 50px;
+        width: 50px;
+        border-radius: 60%;
+        top: 20%;
+        left: 5px;
+        background-color: lightgray;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    #gapp{
+        display: flex;
+        gap: 20px;
+        height: fit-content;
+        align-items: center;
+        margin-top: 10px;
+    }
+
+    #map {
+        /*background-image: url('https://cdn.buttercms.com/Ym1iRZNbRHOeWv0X4x3w');
+        background-size: cover;
+        background-repeat: no-repeat;*/
+        min-height: 70%;
+    }
+    #suggestions{
+    position: absolute;
+    display: flex;
+    background-color: transparent;
+    top: 20px;
+    width: 80%;
+    padding-left: 10px;    
+    height: fit-content;
+    border-radius: 10px;
+    right: 20px;
+    column-gap:5px ;
+    font-size:14px;
+    scroll-behavior: smooth;
+    overflow-x: scroll;
+    scrollbar-width: none;
+    z-index: 100;
+    }
+
+    #suggestions > div {
+        margin-left: 10px;
+        padding:  5px;
+        border-radius: 5px;
+        background-color: aliceblue;
+        cursor: pointer;
+        min-width: fit-content;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+    } 
+    
+    #suggestions > div > i {
+        margin-right: 2px;
+        font-size: 12px;
+    }
+
+    #search{
+        position: relative;
+        height: 40px;
+        width: 80%;
+        top: 25px;
+        left:10%;
+        background-color: rgb(171, 203, 231);
+        border-radius: 10px;
+        padding: 5px;
+    }
+
+    #search > div {
+        height:inherit;
+        border-radius: inherit;
+    }
+
+    #searchBox {
+        height:30%;
+        background-color: aliceblue;
+    }    
+
+    .flex {
+        display:flex;
+    }
+
+    .grid {
+        display:grid;
+    }
+
+    .flex.column {    
+        flex-direction: column;
+    }
+
+    .flex.gap-s {
+        gap:5px;
+    }
+
+    .flex.gap-l {
+        gap:20px;
+    }
+   
+   .page {
+        position: absolute;
+        top:0;
+        height: 100%;
+        min-width:100%;
+        background-color: white;
+   }  
+
+   @keyframes swipeleft {
+        0% {
+            right: 0;
+        }
+        10%{
+            right: 10%;
+        }
+        20%{
+            right: 20%;
+        }
+        30% {
+            right: 30%;
+        }
+        40% {
+            right: 40%;
+        }
+        50% {
+            right: 50%;
+        }
+        60% {
+            right: 60%;
+        }
+        70% {
+            right: 70%;
+        }
+        80% {
+            right: 80%;
+        }
+        90% {
+            right:90%;
+        }
+        100% {
+            right:100%;
+        }
+   }
+
+   /*Copied code*/
+   #payment > div {
+    max-width: 400px;
+    margin: 40px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+input[type="text"], input[type="number"] {
+    width: 100%;
+    height: 40px;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+button[type="submit"] {
+    width: 100%;
+    height: 40px;
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #3e8e41;
+}
+
+#payment-status {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #666;
+}
+   
+</style>
+<body>
+    <div id="project" class="page">
+        
+        <div id="map">
+        
+            <div id="menu-button">
+                <div><i class="fa fa-bars" aria-hidden="true"></i></div>
+            </div>
+            <div id="suggestions">
+                <!--Suggestions goes in here-->
+                <div><i class="fa fa-bed" aria-hidden="true"></i>  hotels</div>
+                <div>takeaway</div>
+                <div><i class="fa fa-shopping-cart" aria-hidden="true"></i>  Groceries</i></div>
+                <div data-id="id"><svg height="15px" width="15px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 254.019 254.019" xml:space="preserve" fill="#000000" transform="matrix(1, 0, 0, 1, 0, 0)" stroke="#000000" stroke-width="1.270095"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <g> <path style="fill:#010002;" d="M126.514,48.282c-43.428,0-78.738,35.319-78.738,78.738c0,43.389,35.309,78.718,78.738,78.718 c43.389,0,78.738-35.329,78.738-78.708C205.252,83.601,169.932,48.282,126.514,48.282z M126.514,198.898 c-39.647,0-71.879-32.232-71.879-71.869s32.222-71.928,71.879-71.928s71.879,32.29,71.879,71.928 S166.171,198.898,126.514,198.898z M193.352,127.029c0,36.882-29.926,66.808-66.828,66.808 c-36.912,0-66.838-29.936-66.838-66.808c0-36.921,29.936-66.847,66.838-66.847C163.426,60.172,193.352,90.108,193.352,127.029z M41.308,56.733l0.02,38.836h-0.059c-0.391,12.389-13.971,17.117-13.971,17.117v24.924h0.02l-0.02,57.312 c0,0-5.491,7.093-12.604,0v-82.226h0.166c-8.285-3.527-14.411-4.748-14.802-17.117H0V56.733l6.224-0.029L9.252,94.28H16.6 l0.928-38.348h5.989l0.723,38.348h8.617l1.983-37.547L41.308,56.733L41.308,56.733z M252.1,122.857h-15.232v77.038h-17.596 V54.144h17.596C236.878,54.134,260.844,84.548,252.1,122.857z"></path> </g> </g> </g> </g></svg>Restaurants</div>
+                <div>shops</div>
+                <div style="padding-top:7px;"><svg style="margin-right:2px;" xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 24 24" fill="none">
+                    <path d="M7.5 11.5V9.5H16.5V11.5H7.5Z" fill="#212121"/>
+                    <path d="M4 3C2.89543 3 2 3.89543 2 5C2 5.74028 2.4022 6.38663 3 6.73244V20.25C3 20.6642 3.33579 21 3.75 21H6V15.75C6 15.3358 6.33579 15 6.75 15H10.75C11.1642 15 11.5 15.3358 11.5 15.75V21H20.25C20.6642 21 21 20.6642 21 20.25V6.73244C21.5978 6.38663 22 5.74028 22 5C22 3.89543 21.1046 3 20 3H4ZM3.5 5C3.5 4.72386 3.72386 4.5 4 4.5H20C20.2761 4.5 20.5 4.72386 20.5 5C20.5 5.27614 20.2761 5.5 20 5.5H4C3.72386 5.5 3.5 5.27614 3.5 5ZM6.75 8H17.25C17.6642 8 18 8.33579 18 8.75V12.25C18 12.6642 17.6642 13 17.25 13H6.75C6.33579 13 6 12.6642 6 12.25V8.75C6 8.33579 6.33579 8 6.75 8ZM14.75 15H17.25C17.6642 15 18 15.3358 18 15.75V18.25C18 18.6642 17.6642 19 17.25 19H14.75C14.3358 19 14 18.6642 14 18.25V15.75C14 15.3358 14.3358 15 14.75 15Z" fill="#212121"/>
+                    <path d="M10 16.5V21H7.5V16.5H10Z" fill="#212121"/>
+                    </svg>malls</div>
+                <div>lounge</div>
+                <div> <i class="fa-solid fa-store"></i> store</div>
+                <div><i class="fa fa-map-marker" aria-hidden="true"></i> find me</div>
+            </div>
+            </div>
+        <!-- The Search Box-->
+        <div id="searchBox">
+            <div id="search">
+                <div>search bar/voice command</div>
+            </div>
+        </div>
+        <!--Search Box Ends Here-->
+        <div id="menu">            
+        </div> 
+        <div id="bar">            
+            <div id="subar">
+                <div id="gapp">
+                    <div id="profileimage"> <i class="fas fa-user" style="margin:15px 15px 15px 15px"></i></div>
+                    <div>
+                        <div>Source</div>
+                        <div style="color: green ;">My Account</div>    
+                    </div>                    
+                </div>
+                <div> <span class="fas fa-star" style="color:green;padding: 20px 20px"></span>5.00 Rating</div>
+            </div>
+            <div>
+                <div data-link="payment" onclick="linkPages(this)"><i class="fas fa-wallet" style="color:blueviolet;padding:15px 15px 15px 15px ; "></i>Payment</div>
+                <div data-link="promotion" onclick="linkPages(this)"><i class="fa fa-tags" aria-hidden="true" style="color: gray;padding:15px 15px 15px 15px;"></i>Promotion</div>
+                <div data-link="myBusinesses" onclick="linkPages(this)"><i class="fas fa-clock" style="color: grey;padding: 15px 15px 15px 15px;"></i>My Busness</div>
+                <div data-link="businessPage" onclick="linkPages(this)"><i class="fa fa-briefcase" aria-hidden="true" style="color: grey;padding: 15px 15px 15px 15px;"></i>Expense Your Busness</div>
+                <div data-link="support" onclick="linkPages(this)"><i class="fas fa-question-circle" aria-hidden="true" style="color: grey;padding: 15px 15px 15px 15px;"></i>Support</div>
+                <div data-link="about" onclick="linkPages(this)"><i class="fa fa-info-circle" aria-hidden="true" style="color: grey;padding: 15px 15px 15px 15px;"></i>About</div>
+                <div id="bar2">
+                    <div>
+                        <span class="fas fa-times" id="closeBtn"></span>
+                        <div>make your shop visible</div>
+                        <div>Earn while you make your shop visible</div> 
+                    </div>                        
+                </div>
+            </div>            
+        </div>
+              
+    </div>
+    <div id="payment" class="page" style="display:none;">
+        <div>
+            <div><i class="fa fa-arrow-left back" aria-hidden="true"></i></div>
+            <form id="payment-form">
+                <label for="card-number">Card Number:</label>
+                <input type="text" id="card-number" name="card-number" required>
+    
+                <label for="expiration-date">Expiration Date:</label>
+                <input type="text" id="expiration-date" name="expiration-date" required>
+    
+                <label for="cvv">CVV:</label>
+                <input type="text" id="cvv" name="cvv" required>
+    
+                <label for="amount">Amount:</label>
+                <input type="number" id="amount" name="amount" required>
+    
+                <button type="submit">Process Payment</button>
+            </form>
+            <div id="payment-status"></div>
+        </div>
+         
+    </div>
+    <div id="search" class="page" style="display:none;">
+         <div><i class="fa fa-arrow-left back" aria-hidden="true"></i></div>
+    </div>
+    <div id="promotion" class="page" style="display:none;">
+         <div><i class="fa fa-arrow-left back" aria-hidden="true"></i></div>
+    </div>
+    <div id="about" class="page" style="display:none;">
+         <div><i class="fa fa-arrow-left back" aria-hidden="true"></i></div>
+    </div>
+    <div id="support" class="page" style="display:none;">
+         <div><i class="fa fa-arrow-left back" aria-hidden="true"></i></div>
+    </div>
+    <div id="myBusinesses" class="page" style="display:none;">
+         <div><i class="fa fa-arrow-left back" aria-hidden="true"></i></div>
+    </div>
+    <div id="businessPage" class="page" style="display:none;">
+         <div><i class="fa fa-arrow-left back" aria-hidden="true"></i></div>
+    </div>
+    
+    <script type="text/javascript">
+        const domain = "https://div-source.com";
+        let button  = document.getElementById('menu-button');
+        let menu    = document.getElementById('menu');
+        let bar    = document.getElementById('bar');
+        let bar2    = document.getElementById('bar2');
+
+        if( button != null && menu != null ){
+            button.onclick = function(){
+                menu.style.display = "block";
+                bar.style.display = "flex";
+                bar2.style.display = "block";
+                menu.onclick = function(){
+                    this.style.display = "none";
+                    bar.style.display = "none";                  
+                }
+            }
+        } else {
+            document.body.onclick = function(){
+                alert('we could find the element');
+            }
+        }
+
+        //pk.eyJ1Ijoic291cmNlMjAyNCIsImEiOiJjbHg5M25udGQxNjV1Mm5wejV6dDR1M3liIn0.JrTry7hX-Wd9C1I5QSNjkw - public
+        //sk.eyJ1Ijoic291cmNlMjAyNCIsImEiOiJjbHg5NDI0Nzgxanh6Mm1zY2FkN3ptZm43In0.ga0AbKoXZm6LUmji6GjQqw - source
+
+        let close = document.getElementById('closeBtn');
+
+        close.onclick = function(){
+            bar2.style.display = "none";
+        }
+
+        let backBtn = document.getElementsByClassName('back');
+
+        for( let b = 0; b < backBtn.length; b++ ){
+            backBtn[b].addEventListener('click', function(e){
+                let home = document.getElementById('project');
+                let pages  = document.getElementsByClassName('page');
+
+                for( let x = 0; x < pages.length; x++ ){
+                    pages[x].style.display = "none";
+                }
+
+                home.style.display  = "block";
+                home.style.animationName    = "swipeleft";
+                home.style.animationDuration   = "100ms";
+                home.style.animationIterationCount  = "1";
+                home.style.animationDirection       ="alternate";
+                home.style.animationTimingFunction  = "ease-in";
+                home.style.animationFillMode    = "forward";
+                document.body.style.backgroundColor = "rgba(0,0,0,0.2)";
+
+                setTimeout(()=>{
+                    document.body.style.backgroundColor = "rgb(255,255,255)";
+                }, 100);
+            });
+        }
+
+        function linkPages(el){
+            if( ! el || ! el.tagName ) return;
+
+            let id  = el.getAttribute('data-link');
+            let page = document.getElementById(id);
+
+            if( ! page ) return;
+
+            let pages = document.getElementsByClassName('page');
+            let currentPage = null;
+
+            for( let x = 0; x < pages.length; x++ ){
+                currentPage = pages[x];
+
+                if( currentPage.style.display != "none"){
+                    break;
+                }
+            }
+
+            currentPage.style.display   = "none";
+            document.body.style.backgroundColor = "rgba(0,0,0,0.2)";
+            page.style.display          = "block";
+            page.style.animationName    = "swipeleft";
+            page.style.animationDuration   = "100ms";
+            page.style.animationIterationCount  = "1";
+            page.style.animationDirection       ="alternate";
+            page.style.animationTimingFunction  = "ease-in";
+            page.style.animationFillMode    = "forward";
+
+            setTimeout(()=>{
+                document.body.style.backgroundColor = "rgb(255,255,255)";
+            }, 100);
+            //page.style.transitionProperty   =
+        }
+
+        mapboxgl.accessToken = 'pk.eyJ1Ijoic291cmNlMjAyNCIsImEiOiJjbHg5M25udGQxNjV1Mm5wejV6dDR1M3liIn0.JrTry7hX-Wd9C1I5QSNjkw';
+        const map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/standard',
+            projection: 'globe', // Display the map as a globe, since satellite-v9 defaults to Mercator
+            zoom: 5,
+            center: [12.554729, 55.70651]
+        });
+
+        
+
+        const marker1 = new mapboxgl.Marker()
+        .setLngLat([12.554729, 55.70651])
+        .addTo(map);
+
+         // Create a default Marker, colored black, rotated 45 degrees.
+        const marker2 = new mapboxgl.Marker({ color: 'black', rotation: 0 })
+        .setLngLat([12.65147, 55.608166])
+        .addTo(map);
+
+    </script>
+    
+</body>
+</html>
